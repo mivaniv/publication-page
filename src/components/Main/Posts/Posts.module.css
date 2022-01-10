@@ -1,0 +1,21 @@
+.Publication {
+    height: auto;
+    width: 300px;
+    margin: 20px;
+    background: rgba(249, 89, 1, 0.3);
+    border-radius: 10px;
+
+
+}
+
+.title p {
+    text-align: center;
+    font-size: 20px;
+
+
+}
+
+.description p {
+    font-size: 16px;
+    margin: 10px;
+}

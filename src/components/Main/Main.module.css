@@ -1,0 +1,49 @@
+.main {
+    display: flex;
+    justify-content: center;
+}
+
+.storePublication {
+    width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.inputSearch {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    position: relative;
+}
+
+.inputSearch input {
+    font-family: inherit;
+    width: 50%;
+    position: absolute;
+    left: 25%;
+    top: -35px;
+    border: 0;
+    border-radius: 10px;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: #000000;
+    padding: 10px;
+    transition: border-color 0.2s;
+}
+
+.suggestion {
+    list-style-type: none;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 1.3rem;
+}
+.suggestion:hover{
+  color: rgb(249, 89, 1);
+}
+.suggestionsList{
+
+
+}
