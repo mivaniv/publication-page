@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
             <Header/>
-            <Main data={PSTORE}/>
+            <Main data={PSTORE} postsPerPage={2}/>
         </div>
     );
 }

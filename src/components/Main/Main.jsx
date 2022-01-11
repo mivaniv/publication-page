@@ -1,15 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Posts from "./Posts/Posts";
 import classes from "./Main.module.css";
 import Autosuggest from 'react-autosuggest';
 import theme from "./Main.module.css";
+import ReactPaginate from "react-paginate";
 
-const Main = ({data}) => {
+const Main = ({data, postsPerPage}) => {
     const [posts] = useState(data);
     const [filteredPosts, setFilteredPosts] = useState(data)
 
     const [suggestions, setSuggestions] = useState([]);
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState('');
+    const [itemOffset, setItemOffset] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
 
 
     const onSuggestionsFetchRequested = ({value}) => {
@@ -21,7 +24,7 @@ const Main = ({data}) => {
         ));
     };
 
-    const onChange = (event, {newValue}) => {
+    const onChange = (event, { newValue}) => {
         setValue(newValue);
 
         const inputLength = newValue.length;
@@ -41,7 +44,6 @@ const Main = ({data}) => {
     );
 
     const onSuggestionsClearRequested = () => {
-
         setSuggestions([])
 
     };
@@ -52,7 +54,21 @@ const Main = ({data}) => {
         onChange: onChange
 
     };
+// Paginate
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * postsPerPage) % posts.length;
+        console.log(
+            `User requested page number ${event.selected}, which is offset ${newOffset}`
+        );
+        setItemOffset(newOffset);
+    };
+    useEffect(() => {
+        const endOffset = itemOffset + postsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+        setFilteredPosts(posts.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(posts.length / postsPerPage));
 
+    }, [itemOffset, postsPerPage])
     return (
         <div>
             <div className={classes.inputSearch}>
@@ -67,12 +83,23 @@ const Main = ({data}) => {
                 />
             </div>
 
-            <div className={classes.main}>
+            <div className={classes.main} >
                 <div className={classes.storePublication}>
                     {filteredPosts.map(post =>
                         <Posts key={post.name} post={post}/>)}
 
                 </div>
+            </div>
+            <div className={classes.PaginationBar}>
+                <ReactPaginate
+                    breakLabel="..."
+                    previousLabel="<<"
+                    nextLabel=">>"
+                    pageCount={pageCount}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={1}
+                    onPageChange={handlePageClick}
+                />
             </div>
         </div>
 
