@@ -24,13 +24,17 @@ const Main = ({data, postsPerPage}) => {
         ));
     };
 
-    const onChange = (event, { newValue}) => {
-        setValue(newValue);
+    const onChange = (event, {newValue}) => {
+        setValue(newValue.trim());
 
         const inputLength = newValue.length;
-        setFilteredPosts(inputLength === 0 ? posts : posts.filter(
-            post => post.name.toLowerCase().slice(0, inputLength) === newValue.toLowerCase()
-        ))
+        let allPosts = inputLength === 0
+            ? posts
+            : posts.filter(post => post.name.toLowerCase().slice(0, inputLength) === newValue.toLowerCase());
+        setItemOffset(0);
+        const endOffset = itemOffset + postsPerPage;
+        setFilteredPosts(allPosts.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(allPosts.length / postsPerPage));
 
     };
 
